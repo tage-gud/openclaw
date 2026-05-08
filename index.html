@@ -8,7 +8,7 @@
         /* Basic Reset & Body Styling */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            line-height: 1.7; /* Slightly increased line height for readability */
             margin: 0;
             padding: 0;
             background-color: #f4f7f6; /* Light, subtle background */
@@ -17,44 +17,69 @@
         }
 
         .container {
-            max-width: 960px;
-            margin: 30px auto; /* More space around the container */
-            padding: 30px; /* More padding inside */
+            max-width: 1000px; /* Wider container */
+            margin: 40px auto; /* More space around the container */
+            padding: 40px; /* More padding inside */
             background-color: #fff;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
-            border-radius: 10px; /* Slightly more rounded corners */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); /* Softer, larger shadow */
+            border-radius: 12px; /* Slightly more rounded corners */
         }
 
         /* Header */
         h1 {
             color: #2c3e50; /* Darker, sophisticated blue-grey */
             text-align: center;
-            margin-bottom: 35px; /* Increased margin */
-            font-size: 2.8em; /* Larger heading */
-            border-bottom: 3px solid #3498db; /* Brighter blue accent */
+            margin-bottom: 40px; /* Increased margin */
+            font-size: 3.2em; /* Larger heading */
+            border-bottom: 4px solid #3498db; /* Brighter blue accent */
             padding-bottom: 15px;
             font-weight: 600; /* Slightly bolder */
+            letter-spacing: -0.5px; /* Minor adjustment for readability */
         }
 
         h2 {
             color: #34495e; /* Slightly darker blue-grey */
-            margin-top: 40px; /* More space above subheadings */
-            margin-bottom: 20px;
-            font-size: 1.9em; /* Larger subheadings */
-            border-left: 6px solid #3498db; /* Thicker, blue accent */
-            padding-left: 18px;
+            margin-top: 50px; /* More space above subheadings */
+            margin-bottom: 25px;
+            font-size: 2.2em; /* Larger subheadings */
+            border-left: 8px solid #3498db; /* Thicker, blue accent */
+            padding-left: 20px;
             font-weight: 500;
+            letter-spacing: -0.3px;
+        }
+
+        h3 {
+            color: #2c3e50;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-size: 1.6em;
+            border-left: 5px solid #e74c3c; /* Reddish accent */
+            padding-left: 15px;
+            font-weight: 550;
         }
 
         /* Content Sections */
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         p {
-            margin-bottom: 18px; /* More space between paragraphs */
-            font-size: 1.1em;
+            margin-bottom: 20px; /* More space between paragraphs */
+            font-size: 1.15em;
             text-align: justify; /* Justify text for a cleaner look */
+        }
+
+        /* Lists */
+        ul {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        li strong {
+            color: #34495e; /* Darken strong text */
         }
 
         /* Images */
@@ -62,9 +87,9 @@
             display: block;
             max-width: 100%;
             height: auto;
-            margin: 25px auto; /* More space around images */
+            margin: 30px auto; /* More space around images */
             border-radius: 10px; /* Rounded corners for images */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow for images */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow for images */
         }
 
         /* Links */
@@ -72,7 +97,7 @@
             color: #3498db; /* Consistent blue */
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.2s ease-in-out; /* Smooth color transition on hover */
+            transition: color 0.2s ease-in-out, text-decoration 0.2s ease-in-out; /* Smooth transition */
         }
 
         a:hover {
@@ -80,17 +105,18 @@
             text-decoration: underline;
         }
 
-        /* Code Snippets */
+        /* Code Blocks & Inline Code */
         pre {
             background-color: #e8f0fe; /* Light blue background for code */
             color: #000;
-            padding: 20px;
+            padding: 25px;
             border-radius: 7px;
             overflow-x: auto; /* Horizontal scroll for long lines */
-            margin-top: 20px;
-            margin-bottom: 20px;
+            margin-top: 25px;
+            margin-bottom: 25px;
             font-size: 0.95em;
             border: 1px solid #cce0ff; /* Subtle border */
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.07); /* Inner shadow for depth */
         }
 
         code {
@@ -99,7 +125,7 @@
 
         /* User Input Section */
         .user-section {
-            margin-top: 60px; /* More space above user section */
+            margin-top: 70px; /* More space above user section */
             padding-top: 40px;
             border-top: 3px dashed #bdc3c7; /* Dashed border for separation */
         }
@@ -111,28 +137,47 @@
 
         textarea {
             width: 100%;
-            min-height: 200px; /* Taller textarea */
-            padding: 20px;
+            min-height: 250px; /* Taller textarea */
+            padding: 25px;
             border: 1px solid #ccc;
             border-radius: 7px;
             font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-            font-size: 1em;
+            font-size: 1.05em; /* Slightly larger text in textarea */
             resize: vertical; /* Allow vertical resizing */
             box-sizing: border-box; /* Include padding and border in the element's total width and height */
             box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08); /* Subtle inner shadow */
+            outline: none; /* Remove outline on focus */
+        }
+        textarea:focus {
+            border-color: #3498db; /* Highlight border on focus */
+            box-shadow: inset 0 2px 5px rgba(52, 152, 219, 0.2); /* Brighter inner shadow on focus */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #34495e;
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
-                margin: 15px;
-                padding: 20px;
+                margin: 20px;
+                padding: 25px;
             }
             h1 {
-                font-size: 2em;
+                font-size: 2.5em;
             }
             h2 {
-                font-size: 1.5em;
+                font-size: 1.8em;
+            }
+            h3 {
+                font-size: 1.4em;
+            }
+            textarea {
+                font-size: 0.95em;
             }
         }
     </style>
@@ -144,36 +189,4 @@
         <div class="section">
             <h2>What is OpenClaw?</h2>
             <p>
-                OpenClaw is a powerful framework designed to facilitate the creation, deployment, and management of AI agents. It provides a robust runtime environment, essential tooling, and high-level abstractions that simplify the complex process of developing agents capable of interacting with the real world and performing sophisticated tasks autonomously. Think of it as an operating system for your AI agents, giving them structure, access, and the ability to collaborate.
-            </p>
-            <img src="https://via.placeholder.com/600x300?text=OpenClaw+Architecture" alt="OpenClaw Architecture Placeholder">
-            <p>
-                It aims to bridge the gap between raw AI models and practical applications, allowing developers to build AI assistants, automation tools, and more, with greater ease and control.
-            </p>
-        </div>
-
-        <div class="section">
-            <h2>What is OpenClaw Used For?</h2>
-            <p>
-                The versatility of OpenClaw allows it to be applied across a wide range of AI agent-based projects and use cases. Some primary applications include:
-            </p>
-            <ul>
-                <li><strong>Task Automation:</strong> Automating repetitive or complex digital tasks, such as data entry, report generation, or application testing.</li>
-                <li><strong>Complex Workflow Development:</strong> Orchestrating multi-step processes that require decision-making, external tool integration, and sequential execution.</li>
-                <li><strong>Real-world Interaction:</strong> Enabling AI agents to interact with external systems like websites, local files, device nodes, and APIs.</li>
-                <li><strong>Custom AI Assistants:</strong> Building personalized AI assistants tailored to specific needs, roles, or workflows.</li>
-                <li><strong>Research and Development:</strong> Pioneering new capabilities and approaches in AI agent technology and autonomous systems.</li>
-            </ul>
-            <p>
-                Whether you're building a simple chatbot or a sophisticated autonomous system, OpenClaw provides the foundation to bring your AI ideas to life.
-            </p>
-        </div>
-
-        <div class="section">
-            <h2>How to Make it Work Locally</h2>
-            <p>
-                Getting OpenClaw up and running on your local machine is generally straightforward and follows standard practices for Node.js-based tools.
-            </p>
-            <h3>Prerequisites:</h3>
-            <ul>
-                <li><strong>Node.js and npm:</strong> Ensure you have Node.js installed. npm (Node Package Manager) comes bundled with Node.js. You can download it from <a href="https://nodejs.org/" target="_blank">nodejs
+                OpenClaw is a powerful, open-source framework designed to facilitate the creation, deployment, and management of AI agents. It acts as a comprehensive workspace and runtime environment, providing the necessary tools and abstractions to build sophisticated AI agents capable of interacting with the digital and physical world. Think of it as an "operating system" for your AI, offering structure, persistent memory, tool integration, and lifecycle management
