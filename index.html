@@ -172,3 +172,17 @@ openclaw onboard --install-daemon
   </ul>
   <p>Official GitHub: <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">https://github.com/openclaw/openclaw</a></p>
 </div>
+
+<h2>How I Built My Local AI Setup</h2>
+<p>
+  I started by installing OpenClaw on Windows using their official PowerShell installer, 
+  which automatically set up Node.js and Git. After fixing some execution policy issues 
+  and installing Ollama for local AI models, I configured OpenClaw to use OpenRouter 
+  with a free Qwen3-coder model. I then installed the OpenClaw Gateway as a background 
+  service, which gave me a local web dashboard at 127.0.0.1:18789 where I can chat with 
+  and control an AI agent that has full access to my computer's tools and files.
+</p>
+
+<img src="install.webp" alt="OpenClaw installation in PowerShell">
+<img src="gateway.webp" alt="OpenClaw Gateway running">
+<img src="dashboard.webp" alt="OpenClaw dashboard in browser">
