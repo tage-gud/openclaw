@@ -154,10 +154,21 @@
       <p>OpenClaw is MIT licensed and free. You pay for LLM API usage ($10–150/month depending on how much you use it). Light users may spend around $10–20/month, while heavy usage can exceed $100/month depending on configuration. BuildMVPFast</p>
     </div>
 
-    <div class="section" id="running-locally">
-      <h2>Running OpenClaw Locally</h2>
-      <h3>Prerequisites</h3>
-      <p>The recommended runtime is Node 24 (or Node 22.16+).</p>
-      <h3>Installation</h3>
-      <p>The easiest way to get started is via the terminal using openclaw onboard, which guides you step by step through setting up the gateway, workspace, channels, and skills. It also installs the Gateway daemon (launchd/systemd user service) so it s
-...(truncated)...
+    <div class="section" id="installation">
+  <h3>Installation</h3>
+  <p>The easiest way to get started is via the terminal using openclaw onboard, which guides you step by step through setting up the gateway, workspace, channels, and skills. It also installs the Gateway daemon (launchd/systemd user service) so it stays running in the background.</p>
+  <pre><code>bash
+npm install -g openclaw@latest
+# or:
+pnpm add -g openclaw@latest
+
+openclaw onboard --install-daemon
+</code></pre>
+  <p>Useful links:</p>
+  <ul>
+    <li>Getting Started guide (via GitHub)</li>
+    <li>Official documentation</li>
+    <li>ClawHub — community skills registry (13,000+ community-built skills)</li>
+  </ul>
+  <p>Official GitHub: <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">https://github.com/openclaw/openclaw</a></p>
+</div>
