@@ -59,11 +59,7 @@
       text-align: justify;
     }
 
-    ul {
-      margin: 8px 0 16px 28px;
-      line-height: 1.6;
-    }
-
+    ul { margin: 8px 0 16px 28px; line-height: 1.6; }
     li { margin: 6px 0; }
 
     a { color: var(--primary); text-decoration: none; font-weight: bold; }
@@ -95,10 +91,18 @@
       box-shadow: 0 6px 14px rgba(0,0,0,.12);
     }
 
+    pre {
+      background: #eef6ff;
+      border: 1px solid #cde0ff;
+      padding: 14px;
+      border-radius: 6px;
+      overflow: auto;
+    }
+
     @media (max-width: 768px) {
       .container { margin: 20px; padding: 20px; }
       h1 { font-size: 2.5rem; }
-      h2 { font-size: 1.75rem; }
+      h2 { font-size: 1.8rem; }
       p { font-size: 1.0rem; }
     }
   </style>
@@ -109,7 +113,7 @@
 
     <div class="section" id="what-is">
       <h2>What is OpenClaw?</h2>
-      <p>OpenClaw is a free, open-source AI agent that runs locally and can take actions on your computer — not just generate responses. It's not another chatbot competing with tools like ChatGPT or Claude, but part of a new wave of AI agents that don't just respond, they actually act. They run commands, move files, send messages, and handle multi-step tasks in the background while you get on with your day. Emergent behavior.</p>
+      <p>OpenClaw is a free, open-source AI agent that runs locally and can take actions on your computer — not just generate responses. It's not another chatbot competing with tools like ChatGPT or Claude, but part of a new wave of AI agents that don't just respond, they actually act. They run commands, move files, send messages, and handle multi-step tasks in the background while you get on with your day. Emergent</p>
       <p>OpenClaw functions as a local gateway that gives AI models direct access to read and write files, run scripts, and control browsers through a secure sandbox. Many describe it as "self-improving," likened to AGI, because it can autonomously write code to create new skills, implement proactive automation, and maintain long-term memory of user preferences. DigitalOcean</p>
       <p>Official GitHub repo: <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">https://github.com/openclaw/openclaw</a></p>
       <p>Official documentation: <a href="https://docs.openclaw.ai" target="_blank" rel="noopener">https://docs.openclaw.ai</a> (linked via GitHub)</p>
@@ -124,4 +128,36 @@
     </div>
 
     <div class="section" id="how-it-works">
-      <h2>How Does It Work?</h2
+      <h2>How Does It Work?</h2>
+      <p>OpenClaw is an AI-based virtual assistant serving as an agentic interface for autonomous workflows. Bots run locally and are designed to integrate with an external large language model such as Claude, DeepSeek, or one of OpenAI's GPT models. Functionality is accessed via a chatbot within a messaging service such as Signal, Telegram, Discord, or WhatsApp. Configuration data and interaction history are stored locally, enabling persistent and adaptive behavior across sessions. OpenClaw's capabilities come from a plugin system called Skills. Each skill is a directory containing a SKILL.md file with metadata and instructions the LLM uses to understand what the skill does and when to call it. Emergent</p>
+      <p>Supported AI models include: Claude (Anthropic), GPT-4 (OpenAI), Gemini (Google), and local models via Ollama.</p>
+      <p>Supported messaging channels: WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, IRC, Microsoft Teams, Matrix, Feishu, LINE, Mattermost, Nextcloud Talk, Nostr, Synology Chat, Twitch, Zalo, WeChat, QQ, and WebChat. GitHub</p>
+      <p>OpenClaw's capabilities come from a plugin system called Skills. Each skill is a directory containing a SKILL.md file with metadata and instructions the LLM uses to understand what the skill does and when to call it.</p>
+      <p>There is ongoing work to enable agents to perform tasks across local and remote systems, using a blend of local persistence and external LLM services.</p>
+    </div>
+
+    <div class="section" id="what-can-do">
+      <h2>What Can It Do?</h2>
+      <p>Users have documented OpenClaw performing real-world tasks including automatically browsing the web, summarizing PDFs, scheduling calendar entries, conducting agentic shopping, and sending and deleting emails on a user's behalf. A key feature is its persistent memory, which allows the agent to recall past interactions over weeks and adapt to user habits to carry out hyper-personalized functions. CNBC</p>
+      <ul>
+        <li>Automated web browsing and data extraction</li>
+        <li>Document summarization (PDFs, HTML, etc.)</li>
+        <li>Calendar scheduling and reminders</li>
+        <li>Agentic shopping and task orchestration</li>
+        <li>Emails and messages management on behalf of the user</li>
+        <li>Long-term memory for personalized behavior</li>
+      </ul>
+    </div>
+
+    <div class="section" id="cost">
+      <h2>Cost</h2>
+      <p>OpenClaw is MIT licensed and free. You pay for LLM API usage ($10–150/month depending on how much you use it). Light users may spend around $10–20/month, while heavy usage can exceed $100/month depending on configuration. BuildMVPFast</p>
+    </div>
+
+    <div class="section" id="running-locally">
+      <h2>Running OpenClaw Locally</h2>
+      <h3>Prerequisites</h3>
+      <p>The recommended runtime is Node 24 (or Node 22.16+).</p>
+      <h3>Installation</h3>
+      <p>The easiest way to get started is via the terminal using openclaw onboard, which guides you step by step through setting up the gateway, workspace, channels, and skills. It also installs the Gateway daemon (launchd/systemd user service) so it s
+...(truncated)...
