@@ -4,189 +4,619 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Understanding OpenClaw</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f4f7f6;
-      --surface: #ffffff;
-      --text: #333;
-      --muted: #555;
-      --primary: #3498db;
-      --border: #e0e6f0;
+      --bg: #0a0c10;
+      --surface: #111318;
+      --surface2: #181b22;
+      --text: #e8eaf0;
+      --muted: #8b90a0;
+      --primary: #e63946;
+      --primary-dim: rgba(230,57,70,0.12);
+      --accent: #ff6b6b;
+      --border: rgba(255,255,255,0.07);
+      --glow: 0 0 40px rgba(230,57,70,0.15);
     }
-
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 40px;
+ 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+ 
+    /* Background grain texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+ 
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,12,16,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+ 
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+ 
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+ 
+    .nav-links a:hover { color: var(--text); }
+ 
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+ 
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(230,57,70,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 20%, rgba(230,57,70,0.05) 0%, transparent 60%);
+    }
+ 
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+ 
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--primary);
+      border: 1px solid rgba(230,57,70,0.4);
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+    }
+ 
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+ 
+    .hero h1 span { color: var(--primary); }
+ 
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto 48px;
+      font-weight: 300;
+    }
+ 
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(230,57,70,0.3);
+    }
+ 
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(230,57,70,0.4);
+    }
+ 
+    /* Main content */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 120px;
+    }
+ 
+    /* Section */
+    .section {
+      margin-bottom: 80px;
+      padding-top: 40px;
+    }
+ 
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 14px;
+    }
+ 
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--text);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+ 
+    h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin: 28px 0 10px;
+    }
+ 
+    p {
+      font-size: 1.02rem;
+      color: #b0b5c5;
+      margin-bottom: 18px;
+      line-height: 1.75;
+    }
+ 
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,107,107,0.3);
+      transition: border-color 0.2s;
+    }
+ 
+    a:hover { border-color: var(--accent); }
+ 
+    /* Cards */
+    .card {
       background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+ 
+    .card:hover {
+      border-color: rgba(230,57,70,0.3);
+      transform: translateY(-2px);
+    }
+ 
+    /* Feature grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+ 
+    .feature-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+ 
+    .feature-item:hover { border-color: rgba(230,57,70,0.3); }
+ 
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+ 
+    .feature-item h4 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+ 
+    .feature-item p {
+      font-size: 0.88rem;
+      margin: 0;
+      color: var(--muted);
+    }
+ 
+    /* Code block */
+    pre {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
+      padding: 24px;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #a8d8a8;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      margin: 20px 0;
+    }
+ 
+    /* List */
+    ul {
+      list-style: none;
+      margin: 16px 0 24px;
+    }
+ 
+    ul li {
+      position: relative;
+      padding-left: 20px;
+      color: #b0b5c5;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+ 
+    ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-size: 0.85rem;
+    }
+ 
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 60px 0;
+    }
+ 
+    /* Images */
+    .image-block {
+      margin: 32px 0;
+    }
+ 
+    .image-block img {
+      width: 100%;
       border-radius: 12px;
       border: 1px solid var(--border);
-      box-shadow: 0 8px 20px rgba(0,0,0,.08);
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 3rem;
-      margin: 0 0 28px;
-      color: #2c3e50;
-      letter-spacing: -0.5px;
-      border-bottom: 4px solid var(--primary);
-      padding-bottom: 14px;
-    }
-
-    h2 {
-      font-size: 2rem;
-      margin: 40px 0 14px;
-      padding-left: 12px;
-      border-left: 6px solid var(--primary);
-      color: #2c3e50;
-    }
-
-    h3 {
-      font-size: 1.25rem;
-      color: #2c3e50;
-      margin: 18px 0 8px;
-    }
-
-    p {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      margin: 0 0 14px;
-      text-align: justify;
-    }
-
-    ul { margin: 8px 0 16px 28px; line-height: 1.6; }
-    li { margin: 6px 0; }
-
-    a { color: var(--primary); text-decoration: none; font-weight: bold; }
-    a:hover { text-decoration: underline; }
-
-    .section { margin-bottom: 40px; }
-
-    .note-area {
-      margin-top: 20px;
-      padding: 10px;
-      border: 1px dashed #bdc3c7;
-      border-radius: 6px;
-      background: #fcfcfc;
-    }
-
-    /* Empty paragraph area styling (visually subtle) */
-    #notes {
-      min-height: 40px;
-      margin: 0;
-      padding: 0;
-    }
-
-    img {
       display: block;
-      max-width: 100%;
-      height: auto;
-      margin: 18px auto;
+    }
+ 
+    .image-caption {
+      font-size: 0.83rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 10px;
+      font-style: italic;
+    }
+ 
+    /* Timeline/steps for "How I built" */
+    .steps {
+      margin-top: 32px;
+    }
+ 
+    .step {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+ 
+    .step-num {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--primary-dim);
+      border: 1px solid rgba(230,57,70,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--primary);
+      margin-top: 4px;
+    }
+ 
+    .step-content h4 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+ 
+    .step-content p {
+      font-size: 0.95rem;
+      margin: 0;
+    }
+ 
+    /* Cost badge */
+    .cost-badge {
+      display: inline-block;
+      background: var(--primary-dim);
+      border: 1px solid rgba(230,57,70,0.3);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-left: 10px;
+    }
+ 
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+ 
+    .nav-old-btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      box-shadow: 0 6px 14px rgba(0,0,0,.12);
+      padding: 8px 18px;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
     }
-
-    pre {
-      background: #eef6ff;
-      border: 1px solid #cde0ff;
-      padding: 14px;
-      border-radius: 6px;
-      overflow: auto;
+    .nav-old-btn:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.2);
     }
-
+ 
     @media (max-width: 768px) {
-      .container { margin: 20px; padding: 20px; }
-      h1 { font-size: 2.5rem; }
-      h2 { font-size: 1.8rem; }
-      p { font-size: 1.0rem; }
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.8rem; }
+      .step { flex-direction: column; gap: 12px; }
+    }
+ 
+    /* Scroll reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Understanding OpenClaw</h1>
-
-    <div class="section" id="what-is">
+ 
+  <nav>
+    <div class="nav-logo">OpenClaw</div>
+    <a href="oldpage.html" class="nav-old-btn">Old Version →</a>
+  </nav>
+ 
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-tag">AI Agent Infrastructure</div>
+      <h1>Understanding<br><span>OpenClaw</span></h1>
+      <p class="hero-sub">A free, open-source AI agent that doesn't just respond — it acts. Runs locally, controls your computer, and automates real workflows.</p>
+      <a href="#what-is" class="hero-cta">Explore ↓</a>
+    </div>
+  </section>
+ 
+  <main>
+ 
+    <div class="section reveal" id="what-is">
+      <div class="section-label">Overview</div>
       <h2>What is OpenClaw?</h2>
-      <p>OpenClaw is a free, open-source AI agent that runs locally and can take actions on your computer — not just generate responses. It's not another chatbot competing with tools like ChatGPT or Claude, but part of a new wave of AI agents that don't just respond, they actually act. They run commands, move files, send messages, and handle multi-step tasks in the background while you get on with your day. Emergent</p>
-      <p>OpenClaw functions as a local gateway that gives AI models direct access to read and write files, run scripts, and control browsers through a secure sandbox. Many describe it as "self-improving," likened to AGI, because it can autonomously write code to create new skills, implement proactive automation, and maintain long-term memory of user preferences. DigitalOcean</p>
-      <p>Official GitHub repo: <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">https://github.com/openclaw/openclaw</a></p>
-      <p>Official documentation: <a href="https://docs.openclaw.ai" target="_blank" rel="noopener">https://docs.openclaw.ai</a> (linked via GitHub)</p>
+      <div class="card">
+        <p>OpenClaw is a free, open-source AI agent that runs locally and can take actions on your computer — not just generate responses. It's not another chatbot competing with tools like ChatGPT or Claude, but part of a new wave of AI agents that don't just respond, they actually act.</p>
+        <p>OpenClaw functions as a local gateway that gives AI models direct access to read and write files, run scripts, and control browsers through a secure sandbox. Many describe it as "self-improving" because it can autonomously write code to create new skills, implement proactive automation, and maintain long-term memory of user preferences.</p>
+        <p>
+          Official GitHub: <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">github.com/openclaw/openclaw</a><br>
+          Documentation: <a href="https://docs.openclaw.ai" target="_blank" rel="noopener">docs.openclaw.ai</a>
+        </p>
+      </div>
     </div>
-
-    <div class="section" id="history">
-      <h2>Background and History</h2>
-      <p>OpenClaw was developed by Austrian developer Peter Steinberger and first published in November 2025 under the name Clawdbot. The software was derived from an earlier personal project called Clawd — an AI-based virtual assistant named after Anthropic's chatbot Claude. Wikipedia</p>
-      <p>The project went through three name changes in three months: Clawdbot (November 2025), Moltbot (January 2026), and finally OpenClaw (January 30, 2026) — with a lobster as its mascot, symbolizing growth and openness. It reached 100,000 GitHub stars in roughly three months, one of the fastest growth curves in GitHub history. OpenClaw</p>
-      <p>On February 14, 2026, Steinberger announced he would be joining OpenAI, and that a non-profit foundation would be established to provide future stewardship of the OpenClaw project. Wikipedia</p>
+ 
+    <div class="divider"></div>
+ 
+    <div class="section reveal" id="history">
+      <div class="section-label">Background</div>
+      <h2>History</h2>
+      <div class="card">
+        <p>OpenClaw was developed by Austrian developer Peter Steinberger and first published in November 2025 under the name <strong style="color:var(--text)">Clawdbot</strong>. The project went through three name changes in three months:</p>
+        <ul>
+          <li>Clawdbot — November 2025</li>
+          <li>Moltbot — January 2026</li>
+          <li>OpenClaw — January 30, 2026 (with a lobster as mascot, symbolizing growth)</li>
+        </ul>
+        <p>It reached 100,000 GitHub stars in roughly three months — one of the fastest growth curves in GitHub history. On February 14, 2026, Steinberger announced he would be joining OpenAI, and that a non-profit foundation would provide future stewardship of the project.</p>
+      </div>
     </div>
-
-    <div class="section" id="how-it-works">
+ 
+    <div class="divider"></div>
+ 
+    <div class="section reveal" id="how-it-works">
+      <div class="section-label">Technical</div>
       <h2>How Does It Work?</h2>
-      <p>OpenClaw is an AI-based virtual assistant serving as an agentic interface for autonomous workflows. Bots run locally and are designed to integrate with an external large language model such as Claude, DeepSeek, or one of OpenAI's GPT models. Functionality is accessed via a chatbot within a messaging service such as Signal, Telegram, Discord, or WhatsApp. Configuration data and interaction history are stored locally, enabling persistent and adaptive behavior across sessions. OpenClaw's capabilities come from a plugin system called Skills. Each skill is a directory containing a SKILL.md file with metadata and instructions the LLM uses to understand what the skill does and when to call it. Emergent</p>
-      <p>Supported AI models include: Claude (Anthropic), GPT-4 (OpenAI), Gemini (Google), and local models via Ollama.</p>
-      <p>Supported messaging channels: WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, IRC, Microsoft Teams, Matrix, Feishu, LINE, Mattermost, Nextcloud Talk, Nostr, Synology Chat, Twitch, Zalo, WeChat, QQ, and WebChat. GitHub</p>
-      <p>OpenClaw's capabilities come from a plugin system called Skills. Each skill is a directory containing a SKILL.md file with metadata and instructions the LLM uses to understand what the skill does and when to call it.</p>
-      <p>There is ongoing work to enable agents to perform tasks across local and remote systems, using a blend of local persistence and external LLM services.</p>
+      <p>OpenClaw is an agentic interface for autonomous workflows. Bots run locally and integrate with an external large language model. Configuration data and interaction history are stored locally, enabling persistent and adaptive behavior.</p>
+ 
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-icon">🧠</div>
+          <h4>Supported Models</h4>
+          <p>Claude, GPT-4, Gemini, DeepSeek, and local models via Ollama</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">💬</div>
+          <h4>Messaging Channels</h4>
+          <p>Telegram, Discord, WhatsApp, Signal, Slack, Teams, and 15+ more</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔧</div>
+          <h4>Skills System</h4>
+          <p>Plugin directories with SKILL.md files — 13,000+ community-built skills</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">💾</div>
+          <h4>Persistent Memory</h4>
+          <p>Recalls past interactions over weeks and adapts to user habits</p>
+        </div>
+      </div>
     </div>
-
-    <div class="section" id="what-can-do">
+ 
+    <div class="divider"></div>
+ 
+    <div class="section reveal" id="what-can-do">
+      <div class="section-label">Capabilities</div>
       <h2>What Can It Do?</h2>
-      <p>Users have documented OpenClaw performing real-world tasks including automatically browsing the web, summarizing PDFs, scheduling calendar entries, conducting agentic shopping, and sending and deleting emails on a user's behalf. A key feature is its persistent memory, which allows the agent to recall past interactions over weeks and adapt to user habits to carry out hyper-personalized functions. CNBC</p>
+      <p>Users have documented OpenClaw performing real-world tasks including automated browsing, scheduling, agentic shopping, and managing emails on a user's behalf.</p>
       <ul>
         <li>Automated web browsing and data extraction</li>
         <li>Document summarization (PDFs, HTML, etc.)</li>
         <li>Calendar scheduling and reminders</li>
         <li>Agentic shopping and task orchestration</li>
-        <li>Emails and messages management on behalf of the user</li>
+        <li>Email and message management</li>
         <li>Long-term memory for personalized behavior</li>
       </ul>
     </div>
-
-    <div class="section" id="cost">
-      <h2>Cost</h2>
-      <p>OpenClaw is MIT licensed and free. You pay for LLM API usage ($10–150/month depending on how much you use it). Light users may spend around $10–20/month, while heavy usage can exceed $100/month depending on configuration. BuildMVPFast</p>
+ 
+    <div class="divider"></div>
+ 
+    <div class="section reveal" id="cost">
+      <div class="section-label">Pricing</div>
+      <h2>Cost <span class="cost-badge">MIT License</span></h2>
+      <div class="card">
+        <p>OpenClaw itself is free and open source. You pay only for LLM API usage — roughly $10–20/month for light users, up to $100+/month for heavy usage. Alternatively, use a free local model via Ollama at zero cost.</p>
+      </div>
     </div>
-
-    <div class="section" id="installation">
-  <h3>Installation</h3>
-  <p>The easiest way to get started is via the terminal using openclaw onboard, which guides you step by step through setting up the gateway, workspace, channels, and skills. It also installs the Gateway daemon (launchd/systemd user service) so it stays running in the background.</p>
-  <pre><code>bash
-npm install -g openclaw@latest
+ 
+    <div class="divider"></div>
+ 
+    <div class="section reveal" id="installation">
+      <div class="section-label">Get Started</div>
+      <h2>Installation</h2>
+      <p>The easiest way to get started is via the terminal. The onboard wizard guides you through setting up the gateway, workspace, channels, and skills.</p>
+      <pre><code>npm install -g openclaw@latest
 # or:
 pnpm add -g openclaw@latest
-
-openclaw onboard --install-daemon
-</code></pre>
-  <p>Useful links:</p>
-  <ul>
-    <li>Getting Started guide (via GitHub)</li>
-    <li>Official documentation</li>
-    <li>ClawHub — community skills registry (13,000+ community-built skills)</li>
-  </ul>
-  <p>Official GitHub: <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">https://github.com/openclaw/openclaw</a></p>
-</div>
-
-<h2>How I Built My Local AI Setup</h2>
-<p>
-  I started by installing OpenClaw on Windows using their official PowerShell installer, 
-  which automatically set up Node.js and Git. After fixing some execution policy issues 
-  and installing Ollama for local AI models, I configured OpenClaw to use OpenRouter 
-  with a free Qwen3-coder model. I then installed the OpenClaw Gateway as a background 
-  service, which gave me a local web dashboard at 127.0.0.1:18789 where I can chat with 
-  and control an AI agent that has full access to my computer's tools and files.
-</p>
-
-<img src="install.webp" alt="OpenClaw installation in PowerShell">
-<p>The OpenClaw installer running in PowerShell, automatically downloading Node.js and setting everything up.</p>
-
-<img src="gateway.webp" alt="OpenClaw Gateway running">
-<p>The OpenClaw Gateway starting up successfully, showing all services loading and ready.</p>
-
-<img src="dashboard.webp" alt="OpenClaw dashboard in browser">
-<p>The OpenClaw web dashboard running locally in the browser, where I can chat with and control the AI agent.</p>
+ 
+openclaw onboard --install-daemon</code></pre>
+    </div>
+ 
+    <div class="divider"></div>
+ 
+    <div class="section reveal" id="my-setup">
+      <div class="section-label">Personal Experience</div>
+      <h2>How I Built My Local AI Setup</h2>
+      <p>I set up OpenClaw from scratch on a Windows machine, working through several challenges to get a fully local AI agent running.</p>
+ 
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Installation via PowerShell</h4>
+            <p>Used the official OpenClaw installer script which automatically downloaded Node.js and Git, then installed OpenClaw itself.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Fixing PowerShell Execution Policy</h4>
+            <p>Had to run <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:0.85rem;">Set-ExecutionPolicy RemoteSigned</code> to allow scripts to run on Windows.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Configuring a Free AI Model</h4>
+            <p>Installed Ollama and configured OpenClaw to use OpenRouter with the free Qwen3-coder model via OpenRouter's API.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Starting the Gateway</h4>
+            <p>Installed the OpenClaw Gateway as a background service (required admin PowerShell), giving access to the local web dashboard at 127.0.0.1:18789.</p>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="image-block">
+        <img src="install.webp" alt="OpenClaw installation in PowerShell">
+        <p class="image-caption">The OpenClaw installer running in PowerShell, automatically downloading Node.js and setting everything up.</p>
+      </div>
+ 
+      <div class="image-block">
+        <img src="gateway.webp" alt="OpenClaw Gateway running">
+        <p class="image-caption">The OpenClaw Gateway starting up successfully, showing all services loading and ready.</p>
+      </div>
+ 
+      <div class="image-block">
+        <img src="dashboard.webp" alt="OpenClaw dashboard in browser">
+        <p class="image-caption">The OpenClaw web dashboard running locally in the browser, where I can chat with and control the AI agent.</p>
+      </div>
+    </div>
+ 
+  </main>
+ 
+  <footer>
+    Built with OpenClaw &amp; a lot of PowerShell debugging · 2026
+  </footer>
+ 
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+ 
+</body>
+</html>
+ 
