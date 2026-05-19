@@ -13,11 +13,11 @@
       --primary: #3498db;
       --border: #e0e6f0;
     }
-
+ 
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text);
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-
+ 
     .container {
       max-width: 1000px;
       margin: 40px auto;
@@ -27,7 +27,7 @@
       border: 1px solid var(--border);
       box-shadow: 0 8px 20px rgba(0,0,0,.08);
     }
-
+ 
     h1 {
       text-align: center;
       font-size: 3rem;
@@ -37,7 +37,7 @@
       border-bottom: 4px solid var(--primary);
       padding-bottom: 14px;
     }
-
+ 
     h2 {
       font-size: 2rem;
       margin: 40px 0 14px;
@@ -45,28 +45,28 @@
       border-left: 6px solid var(--primary);
       color: #2c3e50;
     }
-
+ 
     h3 {
       font-size: 1.25rem;
       color: #2c3e50;
       margin: 18px 0 8px;
     }
-
+ 
     p {
       font-size: 1.05rem;
       line-height: 1.6;
       margin: 0 0 14px;
       text-align: justify;
     }
-
+ 
     ul { margin: 8px 0 16px 28px; line-height: 1.6; }
     li { margin: 6px 0; }
-
+ 
     a { color: var(--primary); text-decoration: none; font-weight: bold; }
     a:hover { text-decoration: underline; }
-
+ 
     .section { margin-bottom: 40px; }
-
+ 
     .note-area {
       margin-top: 20px;
       padding: 10px;
@@ -74,14 +74,13 @@
       border-radius: 6px;
       background: #fcfcfc;
     }
-
-    /* Empty paragraph area styling (visually subtle) */
+ 
     #notes {
       min-height: 40px;
       margin: 0;
       padding: 0;
     }
-
+ 
     img {
       display: block;
       max-width: 100%;
@@ -90,7 +89,7 @@
       border-radius: 8px;
       box-shadow: 0 6px 14px rgba(0,0,0,.12);
     }
-
+ 
     pre {
       background: #eef6ff;
       border: 1px solid #cde0ff;
@@ -98,19 +97,45 @@
       border-radius: 6px;
       overflow: auto;
     }
-
+ 
     @media (max-width: 768px) {
       .container { margin: 20px; padding: 20px; }
       h1 { font-size: 2.5rem; }
       h2 { font-size: 1.8rem; }
       p { font-size: 1.0rem; }
     }
+ 
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 999;
+      background: #ffffff;
+      color: #2c3e50;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+ 
+    .back-btn:hover {
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
+ 
+  <a href="index.html" class="back-btn">← New Version</a>
+ 
   <div class="container">
     <h1>Understanding OpenClaw</h1>
-
+ 
     <div class="section" id="what-is">
       <h2>What is OpenClaw?</h2>
       <p>OpenClaw is a free, open-source AI agent that runs locally and can take actions on your computer — not just generate responses. It's not another chatbot competing with tools like ChatGPT or Claude, but part of a new wave of AI agents that don't just respond, they actually act. They run commands, move files, send messages, and handle multi-step tasks in the background while you get on with your day. Emergent</p>
@@ -118,14 +143,14 @@
       <p>Official GitHub repo: <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">https://github.com/openclaw/openclaw</a></p>
       <p>Official documentation: <a href="https://docs.openclaw.ai" target="_blank" rel="noopener">https://docs.openclaw.ai</a> (linked via GitHub)</p>
     </div>
-
+ 
     <div class="section" id="history">
       <h2>Background and History</h2>
       <p>OpenClaw was developed by Austrian developer Peter Steinberger and first published in November 2025 under the name Clawdbot. The software was derived from an earlier personal project called Clawd — an AI-based virtual assistant named after Anthropic's chatbot Claude. Wikipedia</p>
       <p>The project went through three name changes in three months: Clawdbot (November 2025), Moltbot (January 2026), and finally OpenClaw (January 30, 2026) — with a lobster as its mascot, symbolizing growth and openness. It reached 100,000 GitHub stars in roughly three months, one of the fastest growth curves in GitHub history. OpenClaw</p>
       <p>On February 14, 2026, Steinberger announced he would be joining OpenAI, and that a non-profit foundation would be established to provide future stewardship of the OpenClaw project. Wikipedia</p>
     </div>
-
+ 
     <div class="section" id="how-it-works">
       <h2>How Does It Work?</h2>
       <p>OpenClaw is an AI-based virtual assistant serving as an agentic interface for autonomous workflows. Bots run locally and are designed to integrate with an external large language model such as Claude, DeepSeek, or one of OpenAI's GPT models. Functionality is accessed via a chatbot within a messaging service such as Signal, Telegram, Discord, or WhatsApp. Configuration data and interaction history are stored locally, enabling persistent and adaptive behavior across sessions. OpenClaw's capabilities come from a plugin system called Skills. Each skill is a directory containing a SKILL.md file with metadata and instructions the LLM uses to understand what the skill does and when to call it. Emergent</p>
@@ -134,7 +159,7 @@
       <p>OpenClaw's capabilities come from a plugin system called Skills. Each skill is a directory containing a SKILL.md file with metadata and instructions the LLM uses to understand what the skill does and when to call it.</p>
       <p>There is ongoing work to enable agents to perform tasks across local and remote systems, using a blend of local persistence and external LLM services.</p>
     </div>
-
+ 
     <div class="section" id="what-can-do">
       <h2>What Can It Do?</h2>
       <p>Users have documented OpenClaw performing real-world tasks including automatically browsing the web, summarizing PDFs, scheduling calendar entries, conducting agentic shopping, and sending and deleting emails on a user's behalf. A key feature is its persistent memory, which allows the agent to recall past interactions over weeks and adapt to user habits to carry out hyper-personalized functions. CNBC</p>
@@ -147,12 +172,12 @@
         <li>Long-term memory for personalized behavior</li>
       </ul>
     </div>
-
+ 
     <div class="section" id="cost">
       <h2>Cost</h2>
       <p>OpenClaw is MIT licensed and free. You pay for LLM API usage ($10–150/month depending on how much you use it). Light users may spend around $10–20/month, while heavy usage can exceed $100/month depending on configuration. BuildMVPFast</p>
     </div>
-
+ 
     <div class="section" id="installation">
   <h3>Installation</h3>
   <p>The easiest way to get started is via the terminal using openclaw onboard, which guides you step by step through setting up the gateway, workspace, channels, and skills. It also installs the Gateway daemon (launchd/systemd user service) so it stays running in the background.</p>
@@ -160,7 +185,7 @@
 npm install -g openclaw@latest
 # or:
 pnpm add -g openclaw@latest
-
+ 
 openclaw onboard --install-daemon
 </code></pre>
   <p>Useful links:</p>
@@ -171,3 +196,27 @@ openclaw onboard --install-daemon
   </ul>
   <p>Official GitHub: <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener">https://github.com/openclaw/openclaw</a></p>
 </div>
+ 
+<h2>How I Built My Local AI Setup</h2>
+<p>
+  I started by installing OpenClaw on Windows using their official PowerShell installer, 
+  which automatically set up Node.js and Git. After fixing some execution policy issues 
+  and installing Ollama for local AI models, I configured OpenClaw to use OpenRouter 
+  with a free Qwen3-coder model. I then installed the OpenClaw Gateway as a background 
+  service, which gave me a local web dashboard at 127.0.0.1:18789 where I can chat with 
+  and control an AI agent that has full access to my computer's tools and files.
+</p>
+ 
+<img src="install.webp" alt="OpenClaw installation in PowerShell">
+<p>The OpenClaw installer running in PowerShell, automatically downloading Node.js and setting everything up.</p>
+ 
+<img src="gateway.webp" alt="OpenClaw Gateway running">
+<p>The OpenClaw Gateway starting up successfully, showing all services loading and ready.</p>
+ 
+<img src="dashboard.webp" alt="OpenClaw dashboard in browser">
+<p>The OpenClaw web dashboard running locally in the browser, where I can chat with and control the AI agent.</p>
+ 
+  </div>
+</body>
+</html>
+ 
